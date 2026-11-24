@@ -1,0 +1,74 @@
+/*
+ * Design tokens — measured from the reference design (exported at 1.25x, normalised to CSS px).
+ * Every component reads from these variables; no hard-coded colours inside components.
+ */
+:root {
+  /* Typography */
+  --app-font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 14px;
+  --fs-lg: 15px;
+  --fs-xl: 18px;
+  --fs-2xl: 22px;
+  --fs-3xl: 24px;
+
+  /* Neutrals */
+  --c-bg: #ffffff;
+  --c-surface: #ebf1f5;
+  --c-surface-hover: #dfe7ed;
+  --c-surface-strong: #d9e3ea;
+  --c-border: #d3dce2;
+  --c-border-soft: #e3e8eb;
+  --c-text: #1d2125;
+  --c-text-body: #4a5158;
+  --c-text-muted: #5f6870;
+  --c-text-subtle: #96a1aa;
+  --c-icon: #2a2f33;
+
+  /* Brand */
+  --c-primary: #3b82f6;
+  --c-primary-hover: #2f73e4;
+  --c-primary-soft: #dcebfd;
+  --c-primary-ink: #3a6cb4;
+  --c-progress-track: #b7cdf8;
+  --c-success: #10a36e;
+  --c-success-soft: #d5f2e6;
+  --c-danger: #d6455d;
+  --c-danger-soft: #fbe3e7;
+
+  /* Labels */
+  --c-label-feature-bg: #d6e6f7;
+  --c-label-feature-border: #b8d1ee;
+  --c-label-feature-ink: #3f6cb5;
+  --c-label-bug-bg: #f8dbe2;
+  --c-label-bug-border: #efbccb;
+  --c-label-bug-ink: #b0394f;
+  --c-label-issue-bg: #fde7d3;
+  --c-label-issue-border: #f5cfae;
+  --c-label-issue-ink: #a2582c;
+  --c-label-undefined-ink: #1d2125;
+
+  /* Due date chip */
+  --c-chip-date-bg: #cbebf3;
+  --c-chip-date-border: #a9dbe8;
+  --c-chip-date-ink: #13798b;
+
+  /* Radius / spacing / sizing */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  --header-h: 62px;
+  --column-w: 300px;
+  --column-gap: 40px;
+  --card-pad: 16px;
+  --avatar-sm: 26px;
+  --avatar-md: 32px;
+
+  --shadow-drag: 0 12px 28px rgba(29, 33, 37, 0.18);
+  --shadow-pop: 0 10px 30px rgba(29, 33, 37, 0.14);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
