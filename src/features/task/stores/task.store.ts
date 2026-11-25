@@ -143,5 +143,5 @@ export const useTaskStore = defineStore(
       replaceAll,
     };
   },
-  { persist: { key: 'tasks', version: 1, paths: ['tasks'] } },
+  { persist: { key: 'tasks', version: 2, paths: ['tasks'] } },
 );

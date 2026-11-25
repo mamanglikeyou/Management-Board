@@ -81,5 +81,5 @@ export const useBoardStore = defineStore(
       replaceAll,
     };
   },
-  { persist: { key: 'boards', version: 1, paths: ['boards', 'activeBoardId'] } },
+  { persist: { key: 'boards', version: 2, paths: ['boards', 'activeBoardId'] } },
 );

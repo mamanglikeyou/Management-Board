@@ -16,12 +16,12 @@ export const SEED_BOARDS: Board[] = [
     ],
   },
   {
-    id: 'b_northern',
-    name: 'Northern Light',
+    id: 'b_adhivasindo_2',
+    name: 'Adhivasindo 2',
     columns: [
-      { id: 'c_nl_todo', title: 'To Do', collapsed: false },
-      { id: 'c_nl_doing', title: 'Doing', collapsed: false },
-      { id: 'c_nl_done', title: 'Done', collapsed: false },
+      { id: 'c_a2_todo', title: 'To Do', collapsed: false },
+      { id: 'c_a2_doing', title: 'Doing', collapsed: false },
+      { id: 'c_a2_done', title: 'Done', collapsed: false },
     ],
   },
 ];
