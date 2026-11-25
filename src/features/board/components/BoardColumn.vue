@@ -10,7 +10,7 @@ import ActionMenu, { type ActionMenuItem } from '@/shared/components/ActionMenu.
 import IconButton from '@/shared/components/IconButton.vue';
 import InlineInput from '@/shared/components/InlineInput.vue';
 import { addIcon, collapseIcon, editIcon, expandIcon, moreIcon, trashIcon } from '@/shared/icons';
-import { useBoardActions } from '../composables';
+import { useBoardActions } from '../composables/useBoardActions';
 import { useBoardStore } from '../stores/board.store';
 import type { Column } from '../types';
 
@@ -62,16 +62,21 @@ function onDragChange(change: DragChange) {
   const before = siblings[event.newIndex]?.id ?? null;
   tasks.moveTask(event.element.id, props.column.id, before);
 }
+
+/** Small haptic tick on phones so the user feels the card being picked up. */
+function onDragStart() {
+  if (window.matchMedia('(pointer: coarse)').matches) navigator.vibrate?.(12);
+}
 </script>
 
 <template>
-  <section v-if="column.collapsed" class="column is-collapsed" :aria-label="column.title">
+  <section v-if="column.collapsed" class="column is-collapsed" :aria-label="column.title" data-page>
     <IconButton :icon="expandIcon" label="Expand list" @click="boards.toggleCollapse(column.id)" />
     <h2 class="collapsed-title">{{ column.title }}</h2>
     <span class="count">{{ allTasks.length }}</span>
   </section>
 
-  <section v-else class="column" :aria-label="column.title">
+  <section v-else class="column" :aria-label="column.title" data-page>
     <header class="column-header">
       <InlineInput
         v-if="renaming"
@@ -107,13 +112,16 @@ function onDragChange(change: DragChange) {
       group="tasks"
       class="card-list"
       ghost-class="card-ghost"
+      chosen-class="card-chosen"
       drag-class="card-drag"
       :animation="180"
-      :delay="150"
+      :delay="300"
       :delay-on-touch-only="true"
+      :touch-start-threshold="6"
       :force-fallback="true"
       :fallback-tolerance="4"
       :scroll-sensitivity="80"
+      @start="onDragStart"
       @change="onDragChange"
     >
       <template #item="{ element }">
@@ -171,7 +179,8 @@ function onDragChange(change: DragChange) {
   min-height: 120px;
   padding: 0 0 24px;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  /* Only contain vertical overscroll so horizontal swipes still reach the board. */
+  overscroll-behavior-y: contain;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }

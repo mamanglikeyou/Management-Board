@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { IonIcon } from '@ionic/vue';
 import InlineInput from '@/shared/components/InlineInput.vue';
 import { addIcon } from '@/shared/icons';
-import { useBoardActions } from '../composables';
+import { useBoardActions } from '../composables/useBoardActions';
 
 const adding = ref(false);
 const { addColumn } = useBoardActions();
@@ -15,7 +15,7 @@ function commit(title: string) {
 </script>
 
 <template>
-  <div class="add-list">
+  <div class="add-list" data-page>
     <div v-if="adding" class="form">
       <InlineInput
         label="List name"

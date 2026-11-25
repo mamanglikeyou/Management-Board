@@ -75,6 +75,12 @@ ion-alert {
   opacity: 0.35;
 }
 
+/* Long-press feedback on touch: the card lifts before it can be dragged. */
+.card-chosen {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-drag);
+}
+
 .card-drag {
   transform: rotate(2deg);
   box-shadow: var(--shadow-drag);

@@ -1,21 +1,34 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { IonContent, IonHeader, IonPage } from '@ionic/vue';
+import { useMediaQuery } from '@/shared/composables/useMediaQuery';
 import AddListCard from '../components/AddListCard.vue';
 import BoardColumn from '../components/BoardColumn.vue';
 import BoardHeader from '../components/BoardHeader.vue';
+import ColumnTabs from '../components/ColumnTabs.vue';
+import { useColumnPager } from '../composables/useColumnPager';
 import { useBoardStore } from '../stores/board.store';
 
 const boards = useBoardStore();
+const boardEl = ref<HTMLElement>();
+const isMobile = useMediaQuery('(max-width: 767px)');
+const { activeIndex, goTo } = useColumnPager(boardEl, isMobile);
 </script>
 
 <template>
   <IonPage>
     <IonHeader class="ion-no-border">
       <BoardHeader />
+      <ColumnTabs
+        v-if="isMobile"
+        :columns="boards.columns"
+        :active-index="activeIndex"
+        @select="goTo"
+      />
     </IonHeader>
 
     <IonContent :scroll-y="false">
-      <main class="board" :aria-label="`${boards.activeBoard.name} board`">
+      <main ref="boardEl" class="board" :aria-label="`${boards.activeBoard.name} board`">
         <TransitionGroup name="column">
           <BoardColumn v-for="column in boards.columns" :key="column.id" :column="column" />
         </TransitionGroup>
@@ -27,6 +40,7 @@ const boards = useBoardStore();
 
 <style scoped>
 .board {
+  position: relative;
   display: flex;
   align-items: stretch;
   gap: var(--column-gap);
@@ -34,7 +48,6 @@ const boards = useBoardStore();
   padding: 20px 24px 0 20px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--c-border) transparent;
 }
@@ -56,19 +69,20 @@ const boards = useBoardStore();
   transform: translateY(8px);
 }
 
-/* Mobile: one column per screen with snap scrolling. */
+/*
+ * Mobile: one column per screen. Paging is handled by useColumnPager
+ * (a short swipe flips the column) instead of CSS scroll-snap.
+ */
 @media (max-width: 767px) {
   .board {
     --column-w: calc(100vw - 56px);
     gap: 16px;
     padding: 16px 16px 0;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 16px;
+    scrollbar-width: none;
   }
 
-  .board > :deep(.column),
-  .board > :deep(.add-list) {
-    scroll-snap-align: start;
+  .board::-webkit-scrollbar {
+    display: none;
   }
 
   .board > :deep(.add-list) {

@@ -1,7 +1,7 @@
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { useToast } from '@/shared/composables/useToast';
 import { useTaskStore } from '@/features/task/stores/task.store';
-import { useBoardStore } from './stores/board.store';
+import { useBoardStore } from '../stores/board.store';
 
 /** Use-cases that span several stores live here, keeping each store single-purpose. */
 export function useBoardActions() {
