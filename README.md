@@ -1,72 +1,224 @@
-# Adhivasindo Task Board
+# Task Management Board
 
-A Kanban task-management board built with **Ionic 9 + Vue 3 + TypeScript** for the Adhivasindo frontend test.
-No backend: all data lives in the browser (Pinia + localStorage).
+Aplikasi papan tugas (Kanban) untuk mengelola pekerjaan tim, dibuat dengan **Ionic + Vue 3 + TypeScript** sebagai pengerjaan _Soal Test Frontend Adhivasindo_.
 
-## Features
+Aplikasi berjalan sepenuhnya di browser, **tanpa backend/API**. Semua data disimpan di _localStorage_ melalui state management Pinia.
 
-| Requirement | Implementation |
-| --- | --- |
-| Board & columns | To do / Doing / Review / Done / Rework, plus **Add new List**, rename, delete, collapse |
-| Task card | Title, label, checklist progress bar, due date, checklist count, attachment count, assignee avatars, cover image |
-| Filter & search | Search (title, description, label, assignee, subtasks) + filter by assignee, label and due date (overdue / today / 7 days / none / specific date) |
-| CRUD | Create (column "+"), read (cards), update and delete in the detail modal |
-| Drag & drop | Move cards between and within columns (SortableJS, touch friendly, works while filtering) |
-| Checklist | Add / tick / remove subtasks, progress bar updates automatically |
-| Storage | Pinia stores persisted to localStorage through a swappable storage driver |
-| Bonus | Cover image upload, toasts for create / update / delete, animations, activity log, export / import JSON, multiple boards |
-| Responsive | Desktop layout from the design; on mobile one column per screen with snap scrolling and a full-screen detail view |
+**🔗 Demo:** [https://task-board-26.vercel.app](https://task-board-26.vercel.app)
 
-## Getting started
+---
+
+## Daftar Isi
+
+- [Fitur](#fitur)
+- [Teknologi](#teknologi)
+- [Menjalankan di Komputer Lokal](#menjalankan-di-komputer-lokal)
+- [Cara Menggunakan Aplikasi](#cara-menggunakan-aplikasi)
+- [Penyimpanan Data](#penyimpanan-data)
+- [Struktur Folder](#struktur-folder)
+- [Keputusan Arsitektur](#keputusan-arsitektur)
+- [Pengujian](#pengujian)
+- [Deploy ke Vercel](#deploy-ke-vercel)
+- [Catatan](#catatan)
+
+---
+
+## Fitur
+
+### Fitur wajib (sesuai soal)
+
+| No  | Ketentuan Soal          | Implementasi                                                                                                                       |
+| --- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Tampilan board & column | Kolom **To do, Doing, Review, Done, Rework**. Setiap kolom bisa berisi banyak task card                                            |
+| 2   | Task card               | Judul, deskripsi, assignee (avatar), due date, label (Feature / Bug / Issue / Undefined), priority, checklist, dan attachment      |
+| 3   | Filtering & searching   | Cari berdasarkan judul, deskripsi, label, nama assignee, dan subtask. Filter berdasarkan **assignee**, **label**, dan **due date** |
+| 4   | CRUD task               | **Create** lewat tombol `+` di kolom, **Read** berupa card, **Update** dan **Delete** lewat modal detail                           |
+| 5   | Drag & drop             | Pindahkan card antar kolom maupun ubah urutan dalam satu kolom. Bisa di desktop (mouse) dan HP (sentuh)                            |
+| 6   | Checklist (subtask)     | Tambah, centang/batal centang, dan hapus subtask. Progress bar menyesuaikan otomatis                                               |
+| 7   | Penyimpanan data        | Pinia + localStorage, data tetap ada setelah halaman di-refresh                                                                    |
+
+### Fitur bonus
+
+- **Cover image** pada task (unggah gambar dari perangkat).
+- **Toast notification** saat membuat, mengubah, dan menghapus task.
+- **Animasi & interaksi**: efek drag, transisi kolom, hover card, dan animasi daftar.
+- **Activity log**: setiap perubahan task tercatat (misalnya "moved this task from To do to Done").
+- **Export / Import JSON**: simpan data ke file dan muat kembali di browser lain.
+- **Kelola kolom**: tambah kolom (_Add new List_), ganti nama, hapus, dan ciutkan (_collapse_).
+- **Beberapa board**: pindah antar board lewat dropdown di kiri atas.
+- **Responsif**: tampilan desktop sesuai desain, dan tampilan khusus untuk tablet & HP.
+
+---
+
+## Teknologi
+
+| Teknologi                                                                     | Versi | Kegunaan                                                               |
+| ----------------------------------------------------------------------------- | ----- | ---------------------------------------------------------------------- |
+| [Ionic Vue](https://ionicframework.com/docs/vue/overview)                     | 9     | Komponen UI (modal, popover, select, datetime, checkbox, toast, alert) |
+| [Vue](https://vuejs.org/)                                                     | 3.5   | Framework frontend (Composition API, `<script setup>`)                 |
+| [TypeScript](https://www.typescriptlang.org/)                                 | 6     | Type safety di seluruh kode                                            |
+| [Pinia](https://pinia.vuejs.org/)                                             | 4     | State management                                                       |
+| [Vuedraggable](https://github.com/SortableJS/vue.draggable.next) (SortableJS) | 4     | Drag & drop                                                            |
+| [Vite](https://vite.dev/)                                                     | 8     | Build tool & dev server                                                |
+| [Vitest](https://vitest.dev/)                                                 | 5     | Unit test                                                              |
+| ESLint + Prettier                                                             | —     | Menjaga kualitas dan kerapian kode                                     |
+
+---
+
+## Menjalankan di Komputer Lokal
+
+### Prasyarat
+
+- **Node.js 22.12 atau lebih baru** (disarankan versi LTS terbaru). Cek dengan `node -v`.
+- **npm** (sudah termasuk saat memasang Node.js).
+
+### Langkah-langkah
 
 ```bash
+# 1. Clone repository
+git clone https://github.com/mamanglikeyou/Management-Board.git
+cd Management-Board
+
+# 2. Pasang dependensi
 npm install
-npm run dev        # http://localhost:5173
-npm test           # unit tests (Vitest)
-npm run lint       # ESLint + Vue + TypeScript rules
-npm run build      # type-check + production build
+
+# 3. Jalankan mode development
+npm run dev
 ```
 
-## Architecture
+Buka **http://localhost:5173** di browser.
+
+### Daftar perintah
+
+| Perintah             | Fungsi                                                                     |
+| -------------------- | -------------------------------------------------------------------------- |
+| `npm run dev`        | Menjalankan aplikasi mode development (perubahan kode langsung terlihat)   |
+| `npm run build`      | Cek tipe TypeScript, lalu membuat versi produksi di folder `dist/`         |
+| `npm run preview`    | Menjalankan hasil build produksi di http://localhost:4173                  |
+| `npm test`           | Menjalankan semua unit test                                                |
+| `npm run test:watch` | Menjalankan unit test dalam mode pantau (otomatis ulang saat kode berubah) |
+| `npm run lint`       | Mengecek kualitas kode dengan ESLint                                       |
+| `npm run typecheck`  | Mengecek tipe TypeScript saja                                              |
+| `npm run avatars`    | Membuat ulang gambar avatar anggota tim di `public/avatars/`               |
+
+---
+
+## Cara Menggunakan Aplikasi
+
+| Aksi                        | Caranya                                                                                                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Membuat task**            | Klik tombol **`+`** di samping nama kolom, isi data, lalu klik **Create**                                                                                                   |
+| **Melihat / mengubah task** | Klik card untuk membuka detail, ubah data, lalu klik **Save**                                                                                                               |
+| **Membatalkan perubahan**   | Klik **Discard** atau **✕**. Jika ada perubahan yang belum disimpan, akan muncul konfirmasi                                                                                 |
+| **Menghapus task**          | Buka detail task, lalu klik ikon **tong sampah** di kanan atas                                                                                                              |
+| **Menandai selesai**        | Buka detail task, lalu klik **Mark Complete**. Progress bar di card berubah hijau                                                                                           |
+| **Memindahkan task**        | Seret card ke kolom lain. Di HP, **tekan agak lama** dulu sebelum menggeser. Bisa juga lewat field **Column** di detail task                                                |
+| **Checklist**               | Di detail task, klik **Add subtask**, ketik judul, lalu tekan **Enter**. Centang untuk menandai selesai                                                                     |
+| **Cover image**             | Di detail task, klik **Add Cover Image** dan pilih gambar                                                                                                                   |
+| **Attachment**              | Seret file ke kotak **Attachments** atau klik **browse from device** (hanya nama & ukuran file yang disimpan)                                                               |
+| **Mencari task**            | Ketik di kolom **Search Tasks**                                                                                                                                             |
+| **Filter task**             | Klik **Filter**, lalu pilih assignee, label, atau due date. Klik **Clear all** untuk menghapus filter                                                                       |
+| **Kelola kolom**            | Klik ikon **⋮** di kolom untuk menambah task, mengganti nama, atau menghapus kolom. Ikon panah di kanan kolom untuk menciutkan kolom. **Add new List** untuk menambah kolom |
+| **Pindah board**            | Klik nama board di kiri atas                                                                                                                                                |
+| **Export / Import / Reset** | Klik **Export / Import**, lalu pilih _Export as JSON_, _Import from JSON_, atau _Reset demo data_                                                                           |
+
+---
+
+## Penyimpanan Data
+
+Karena tidak memakai backend, data disimpan di **localStorage browser** dengan dua kunci:
+
+| Kunci                | Isi                                                        |
+| -------------------- | ---------------------------------------------------------- |
+| `adhivasindo:boards` | Daftar board, kolom, dan board yang sedang aktif           |
+| `adhivasindo:tasks`  | Semua task beserta checklist, attachment, dan activity log |
+
+Hal yang perlu diketahui:
+
+- Data **tersimpan per browser dan per alamat**. Data di `localhost` berbeda dengan data di situs yang sudah di-deploy.
+- Data akan **hilang** jika _site data_ browser dihapus atau memakai mode Incognito. Aplikasi lalu otomatis kembali ke data contoh.
+- Data bisa dipindahkan ke browser lain lewat **Export / Import JSON**.
+- Data tersimpan memiliki **nomor versi**. Jika struktur data berubah, data lama yang tidak cocok diabaikan agar aplikasi tidak rusak.
+
+Untuk melihat datanya: tekan **F12**, buka tab **Application**, lalu pilih **Local Storage**.
+
+---
+
+## Struktur Folder
+
+Kode disusun **per fitur** (_feature-based_), bukan per jenis file, agar setiap fitur mudah dikembangkan secara terpisah.
 
 ```
 src/
-├── core/                 framework-agnostic building blocks
-│   ├── storage/          StorageDriver interface + Pinia persist plugin
-│   └── utils/            date, file, id, clone helpers
-├── theme/                design tokens (measured from the reference) + Ionic theme
-├── shared/               reusable UI: AvatarStack, LabelBadge, ProgressBar, DateChip,
-│   │                     FieldSelect, ActionMenu, InlineInput, SectionBlock, buttons…
-│   ├── composables/      useToast, useConfirm
-│   └── icons/            single icon registry (Ionicons + custom design glyphs)
+├── core/                  Fondasi yang tidak bergantung pada fitur tertentu
+│   ├── storage/           Antarmuka penyimpanan (StorageDriver) + plugin persist Pinia
+│   └── utils/             Helper umum: tanggal, file, id, clone
+├── theme/                 Design tokens (warna, ukuran, radius) + tema Ionic
+├── shared/                Bagian yang dipakai ulang di banyak tempat
+│   ├── components/        Komponen UI reusable: AvatarStack, LabelBadge, ProgressBar,
+│   │                      DateChip, FieldSelect, ActionMenu, InlineInput, tombol, dll.
+│   ├── composables/       useToast (notifikasi), useConfirm (dialog konfirmasi)
+│   └── icons/             Satu tempat untuk semua ikon (Ionicons + ikon custom dari desain)
 ├── features/
-│   ├── board/            board & column store, header, columns, page
-│   ├── task/             task store, card, detail modal, form logic, activity log
-│   ├── filter/           filter store + pure `matchTask` predicate
-│   ├── members/          team members
-│   └── transfer/         export / import / reset
-└── data/                 seed data that mirrors the design
+│   ├── board/             Store board & kolom, header, kolom, halaman board
+│   ├── task/              Store task, card, modal detail, logika form, activity log
+│   ├── filter/            Store filter + fungsi pencarian/filter (matchTask)
+│   ├── members/           Data anggota tim & tombol Invite
+│   └── transfer/          Export, import, dan reset data
+├── data/                  Data contoh (seed) yang meniru isi desain
+├── router/                Konfigurasi routing
+└── main.ts                Titik awal aplikasi
+
+tests/                     Unit test
+public/avatars/            Gambar avatar anggota tim
+scripts/                   Script pendukung (pembuat avatar)
 ```
 
-Key decisions:
+---
 
-- **Feature-first folders.** Each feature owns its store, components and logic, so features can grow independently.
-- **Logic out of components.** Filtering (`matchTask`), checklist progress, ordering (`positionBetween`) and the activity diff are pure functions and covered by unit tests. Components only render and emit events.
-- **Swappable persistence.** Stores opt in with `persist: { key, version }`, and the plugin talks to a `StorageDriver`. Moving to IndexedDB, Ionic Storage or a REST API means writing one new driver.
-- **Draft-based editing.** The detail modal edits a copy (`useTaskForm`). Save commits it, Discard drops it, and closing with unsaved changes asks for confirmation.
-- **Fractional ordering.** Each task has a numeric `position`, so a drag & drop rewrites only the moved card. That is ready for a real API.
-- **Design tokens.** Colours, radii and sizes are CSS variables in `theme/tokens.css`. They were measured from the reference screenshots, which were exported at 125 % scale.
+## Keputusan Arsitektur
 
-## Deployment
+- **Logika dipisah dari tampilan.** Pencarian & filter (`matchTask`), perhitungan progress checklist, pengurutan card (`positionBetween`), dan pencatatan activity log ditulis sebagai fungsi murni dan diuji dengan unit test. Komponen hanya menampilkan data dan mengirim event.
+- **Penyimpanan bisa diganti.** Store tidak mengakses localStorage secara langsung, melainkan lewat `StorageDriver`. Untuk pindah ke IndexedDB, Ionic Storage, atau REST API, cukup buat driver baru tanpa mengubah store maupun komponen.
+- **Edit berbasis draf.** Modal detail mengedit salinan data (`useTaskForm`). Data baru tersimpan ke store saat **Save** ditekan, sedangkan **Discard** membuang salinan tersebut.
+- **Pengurutan fraksional.** Setiap task memiliki nilai `position`. Saat drag & drop, hanya card yang dipindah yang diperbarui. Pola ini siap dipakai jika nanti terhubung ke API.
+- **Logika lintas store di composable.** Contohnya, menghapus kolom sekaligus menghapus task di dalamnya ditangani `useBoardActions`, sehingga setiap store tetap punya satu tanggung jawab.
+- **Design tokens.** Warna, ukuran, dan radius didefinisikan sebagai CSS variable di `src/theme/tokens.css`. Nilainya diukur langsung dari gambar desain referensi, sehingga mengubah tema cukup di satu file.
+- **Responsif.** Desktop mengikuti desain. Di tablet tombol header menjadi ikon. Di HP setiap kolom memenuhi layar dengan _snap scrolling_ dan modal detail tampil layar penuh.
 
-The project is ready for Vercel (`vercel.json` includes the SPA rewrite):
+---
+
+## Pengujian
 
 ```bash
-npx vercel        # first time: log in and link the project
-npx vercel --prod
+npm test
 ```
 
-## Notes
+Unit test (Vitest) mencakup:
 
-- Cover images are dummy photos from Unsplash (allowed by the brief).
-- Avatars are generated once into `public/avatars` with `npm run avatars`.
+- **Pencarian & filter**: berdasarkan judul, deskripsi, assignee, label, subtask, dan berbagai filter due date.
+- **Store task**: membuat, mengubah (termasuk activity log), memindahkan (drag & drop), dan menghapus task.
+- **Utilitas**: perhitungan progress checklist dan posisi card.
+- **Export / Import**: validasi file, penolakan file yang tidak valid, dan penyimpanan data.
+
+---
+
+## Deploy ke Vercel
+
+Project ini sudah siap di-deploy ke Vercel. File `vercel.json` sudah mengatur perintah build, folder output, dan _rewrite_ agar semua URL diarahkan ke aplikasi.
+
+1. Login ke [vercel.com](https://vercel.com) dengan akun GitHub.
+2. Klik **Add New → Project**, lalu pilih repository ini dan klik **Import**.
+3. Framework akan terdeteksi sebagai **Vite**. Pengaturan lain tidak perlu diubah.
+4. Klik **Deploy**.
+
+Setiap kali ada push ke branch `main`, Vercel otomatis melakukan deploy ulang.
+
+---
+
+## Catatan
+
+- Gambar cover task adalah gambar dummy dari [Unsplash](https://unsplash.com) (diperbolehkan oleh soal).
+- Avatar anggota tim dibuat dengan [DiceBear](https://www.dicebear.com/) (gaya _Notionists_) dan disimpan sebagai file statis di `public/avatars/`.
+- Nama dan email anggota tim adalah data contoh.
+- Attachment bersifat dummy: hanya nama, ukuran, dan jenis file yang disimpan, bukan isi file.
