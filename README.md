@@ -16,10 +16,7 @@ Aplikasi berjalan sepenuhnya di browser, **tanpa backend/API**. Semua data disim
 - [Cara Menggunakan Aplikasi](#cara-menggunakan-aplikasi)
 - [Penyimpanan Data](#penyimpanan-data)
 - [Struktur Folder](#struktur-folder)
-- [Keputusan Arsitektur](#keputusan-arsitektur)
-- [Pengujian](#pengujian)
-- [Deploy ke Vercel](#deploy-ke-vercel)
-- [Catatan](#catatan)
+- [Arsitektur](#arsitektur)
 
 ---
 
@@ -176,7 +173,7 @@ scripts/                   Script pendukung (pembuat avatar)
 
 ---
 
-## Keputusan Arsitektur
+## Arsitektur
 
 - **Logika dipisah dari tampilan.** Pencarian & filter (`matchTask`), perhitungan progress checklist, pengurutan card (`positionBetween`), dan pencatatan activity log ditulis sebagai fungsi murni dan diuji dengan unit test. Komponen hanya menampilkan data dan mengirim event.
 - **Penyimpanan bisa diganti.** Store tidak mengakses localStorage secara langsung, melainkan lewat `StorageDriver`. Untuk pindah ke IndexedDB, Ionic Storage, atau REST API, cukup buat driver baru tanpa mengubah store maupun komponen.
@@ -185,40 +182,3 @@ scripts/                   Script pendukung (pembuat avatar)
 - **Logika lintas store di composable.** Contohnya, menghapus kolom sekaligus menghapus task di dalamnya ditangani `useBoardActions`, sehingga setiap store tetap punya satu tanggung jawab.
 - **Design tokens.** Warna, ukuran, dan radius didefinisikan sebagai CSS variable di `src/theme/tokens.css`. Nilainya diukur langsung dari gambar desain referensi, sehingga mengubah tema cukup di satu file.
 - **Responsif.** Desktop mengikuti desain. Di tablet tombol header menjadi ikon. Di HP setiap kolom memenuhi layar dengan _snap scrolling_ dan modal detail tampil layar penuh.
-
----
-
-## Pengujian
-
-```bash
-npm test
-```
-
-Unit test (Vitest) mencakup:
-
-- **Pencarian & filter**: berdasarkan judul, deskripsi, assignee, label, subtask, dan berbagai filter due date.
-- **Store task**: membuat, mengubah (termasuk activity log), memindahkan (drag & drop), dan menghapus task.
-- **Utilitas**: perhitungan progress checklist dan posisi card.
-- **Export / Import**: validasi file, penolakan file yang tidak valid, dan penyimpanan data.
-
----
-
-## Deploy ke Vercel
-
-Project ini sudah siap di-deploy ke Vercel. File `vercel.json` sudah mengatur perintah build, folder output, dan _rewrite_ agar semua URL diarahkan ke aplikasi.
-
-1. Login ke [vercel.com](https://vercel.com) dengan akun GitHub.
-2. Klik **Add New → Project**, lalu pilih repository ini dan klik **Import**.
-3. Framework akan terdeteksi sebagai **Vite**. Pengaturan lain tidak perlu diubah.
-4. Klik **Deploy**.
-
-Setiap kali ada push ke branch `main`, Vercel otomatis melakukan deploy ulang.
-
----
-
-## Catatan
-
-- Gambar cover task adalah gambar dummy dari [Unsplash](https://unsplash.com).
-- Avatar anggota tim dibuat dengan [DiceBear](https://www.dicebear.com/) (gaya _Notionists_) dan disimpan sebagai file statis di `public/avatars/`.
-- Nama dan email anggota tim adalah data contoh.
-- Attachment bersifat dummy: hanya nama, ukuran, dan jenis file yang disimpan, bukan isi file.
