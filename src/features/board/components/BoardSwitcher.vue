@@ -110,4 +110,19 @@ const boards = useBoardStore();
   margin-left: auto;
   color: var(--c-primary);
 }
+
+@media (max-width: 1023px) {
+  .switcher {
+    flex: none;
+  }
+
+  .name {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+  }
+
+  .chevron {
+    margin-left: 0;
+  }
+}
 </style>

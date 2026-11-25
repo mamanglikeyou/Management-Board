@@ -70,8 +70,15 @@ const members = useMemberStore();
     gap: 4px;
   }
 
+  .right {
+    flex: 0 1 auto;
+  }
+
+  /* The search box gives up space first so the board name never gets cut. */
   .search {
-    width: 220px;
+    flex: 0 1 220px;
+    width: auto;
+    min-width: 120px;
     margin-left: 6px;
   }
 }
@@ -100,7 +107,7 @@ const members = useMemberStore();
 
   .search {
     order: 3;
-    width: 100%;
+    flex: 1 1 100%;
     margin-left: 0;
   }
 }
