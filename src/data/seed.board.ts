@@ -29,7 +29,7 @@ export const SEED_BOARDS: Board[] = [
 const unsplash = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=720&q=70&auto=format&fit=crop`;
 
-/** Dummy cover images (allowed by the brief). */
+/** Dummy cover images for the demo data. */
 export const COVERS = {
   interior: unsplash('1618221195710-dd6b41faaea6'),
   facade: unsplash('1486406146926-c627a92ad1ab'),

@@ -1,6 +1,6 @@
 # Task Management Board
 
-Aplikasi papan tugas (Kanban) untuk mengelola pekerjaan tim, dibuat dengan **Ionic + Vue 3 + TypeScript** sebagai pengerjaan _Soal Test Frontend Adhivasindo_.
+Aplikasi papan tugas (Kanban) untuk mengelola pekerjaan tim, dibuat dengan **Ionic + Vue 3 + TypeScript**.
 
 Aplikasi berjalan sepenuhnya di browser, **tanpa backend/API**. Semua data disimpan di _localStorage_ melalui state management Pinia.
 
@@ -25,9 +25,9 @@ Aplikasi berjalan sepenuhnya di browser, **tanpa backend/API**. Semua data disim
 
 ## Fitur
 
-### Fitur wajib (sesuai soal)
+### Fitur utama
 
-| No  | Ketentuan Soal          | Implementasi                                                                                                                       |
+| No  | Fitur                   | Implementasi                                                                                                                       |
 | --- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Tampilan board & column | Kolom **To do, Doing, Review, Done, Rework**. Setiap kolom bisa berisi banyak task card                                            |
 | 2   | Task card               | Judul, deskripsi, assignee (avatar), due date, label (Feature / Bug / Issue / Undefined), priority, checklist, dan attachment      |
@@ -37,7 +37,7 @@ Aplikasi berjalan sepenuhnya di browser, **tanpa backend/API**. Semua data disim
 | 6   | Checklist (subtask)     | Tambah, centang/batal centang, dan hapus subtask. Progress bar menyesuaikan otomatis                                               |
 | 7   | Penyimpanan data        | Pinia + localStorage, data tetap ada setelah halaman di-refresh                                                                    |
 
-### Fitur bonus
+### Fitur tambahan
 
 - **Cover image** pada task (unggah gambar dari perangkat).
 - **Toast notification** saat membuat, mengubah, dan menghapus task.
@@ -218,7 +218,7 @@ Setiap kali ada push ke branch `main`, Vercel otomatis melakukan deploy ulang.
 
 ## Catatan
 
-- Gambar cover task adalah gambar dummy dari [Unsplash](https://unsplash.com) (diperbolehkan oleh soal).
+- Gambar cover task adalah gambar dummy dari [Unsplash](https://unsplash.com).
 - Avatar anggota tim dibuat dengan [DiceBear](https://www.dicebear.com/) (gaya _Notionists_) dan disimpan sebagai file statis di `public/avatars/`.
 - Nama dan email anggota tim adalah data contoh.
 - Attachment bersifat dummy: hanya nama, ukuran, dan jenis file yang disimpan, bukan isi file.
